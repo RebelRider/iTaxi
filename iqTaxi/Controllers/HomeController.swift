@@ -78,7 +78,7 @@ class HomeController: UIViewController {
     }
     
     private let actionButton: UIButton = {
-        let image = UIImage(systemName: "clear")
+        let image = UIImage(systemName: "crop")
         let button = UIButton(type: .system)
         button.setImage(image!.withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
@@ -227,8 +227,8 @@ class HomeController: UIViewController {
     // MARK: - Helper Functions
     
     fileprivate func configureActionButton(config: ActionButtonConfiguration) {
-        let imageA = UIImage(systemName: "clear")
-        let imageD = UIImage(systemName: "clear")
+        let imageA = UIImage(systemName: "line.3.horizontal")
+        let imageD = UIImage(systemName: "arrow.backward.square")
         switch config {
         case .showMenu:
             self.actionButton.setImage(imageA!.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -460,7 +460,7 @@ extension HomeController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? DriverAnnotation {
             let view = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-            view.image = UIImage(systemName: "clear")
+            view.image = UIImage(systemName: "car")
             return view
         }
         
@@ -643,7 +643,7 @@ extension HomeController: RideActionViewDelegate {
             self.animateRideActionView(shouldShow: false)
             self.removeAnnotationsAndOverlays()
             
-            let image = UIImage(systemName: "clear")
+            let image = UIImage(systemName: "x.square")
             self.actionButton.setImage(image!.withRenderingMode(.alwaysOriginal), for: .normal)
             self.actionButtonConfig = .showMenu
             

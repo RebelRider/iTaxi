@@ -17,28 +17,28 @@ class SignUpController: UIViewController {
     }()
     
     private lazy var emailContainerView: UIView = {
-        let image = UIImage(systemName: "clear")
+        let image = UIImage(systemName: "signpost.right")
         let view = UIView().inputContainerView(image: image!, textField: emailTextField)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
     }()
     
     private lazy var fullnameContainerView: UIView = {
-        let image = UIImage(systemName: "clear")
+        let image = UIImage(systemName: "signature")
         let view = UIView().inputContainerView(image: image!, textField: fullnameTextField)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
     }()
     
     private lazy var passwordContainerView: UIView = {
-        let image = UIImage(systemName: "clear")
+        let image = UIImage(systemName: "lock.open")
         let view = UIView().inputContainerView(image: image!, textField: passwordTextField)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
     }()
     
     private lazy var accountTypeContainerView: UIView = {
-        let image = UIImage(systemName: "clear") 
+        let image = UIImage(systemName: "car.circle") 
         let view = UIView().inputContainerView(image: image!,
                                                segmentedControl: accountTypeSegmentedControl)
         view.heightAnchor.constraint(equalToConstant: 80).isActive = true
@@ -123,7 +123,9 @@ class SignUpController: UIViewController {
             if accountTypeIndex == 1 {
                 print("DEBUG: creating user as driver")
                 let geofire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
-                guard let location = self.location else { return }
+                guard let location = self.location else {
+                    print("DEBUG: driver location is nil! ERROR")
+                    return }
                 print("DEBUG: signed up as Driver, setting location")
                 geofire.setLocation(location, forKey: uid, withCompletionBlock: { (error) in
                     self.uploadUserDataAndShowHomeController(uid: uid, values: values)

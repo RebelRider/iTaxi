@@ -5,6 +5,7 @@ import Firebase
 class LoginController: UIViewController {
     
     // MARK: - Properties
+    private let locationManager = LocationHandler.shared.locationManager
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -15,14 +16,14 @@ class LoginController: UIViewController {
     }()
     
     private lazy var emailContainerView: UIView = {
-        let image = UIImage(systemName: "mail.stack")
+        let image = UIImage(systemName: "signpost.right.fill")
         let view = UIView().inputContainerView(image: image!, textField: emailTextField)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
     }()
     
     private lazy var passwordContainerView: UIView = {
-        let image = UIImage(systemName: "lock.shield")
+        let image = UIImage(systemName: "lock.open.fill")
         let view = UIView().inputContainerView(image: image!, textField: passwordTextField)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
@@ -63,6 +64,8 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.startUpdatingLocation()
     }
     
     // MARK: - Selectors

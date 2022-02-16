@@ -19,7 +19,7 @@ class LocationInputView: UIView {
     }
     
     let backButton: UIButton = {
-        let image = UIImage(systemName: "clear")
+        let image = UIImage(systemName: "chevron.left.square")
         let button = UIButton(type: .system)
         button.setImage(image!.withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleBackTapped), for: .touchUpInside)
