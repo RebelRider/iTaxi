@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>546639865134-jkpqh5p88eu87viq5s07n5va4g4hsai9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.546639865134-jkpqh5p88eu87viq5s07n5va4g4hsai9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAIpyfbaiYzzIgDF9_R7xMdLqKH0hNy-Fs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>546639865134</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>KSmirnov.iTaxi</string>
+	<key>PROJECT_ID</key>
+	<string>itaxi-2998e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>itaxi-2998e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:546639865134:ios:6ee24e6f1f89f8dc9906bf</string>
+	<key>DATABASE_URL</key>
+	<string>https://itaxi-2998e-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
