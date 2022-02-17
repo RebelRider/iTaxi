@@ -31,7 +31,7 @@ enum ButtonAction: CustomStringConvertible {
     
     var description: String {
         switch self {
-        case .requestRide: return "CONFIRM UBERX"
+        case .requestRide: return "CONFIRM ORDER"
         case .cancel: return "CANCEL RIDE"
         case .getDirections: return "GET DIRECTIONS"
         case .pickup: return "PICKUP PASSENGER"
@@ -97,10 +97,10 @@ class RideActionView: UIView {
         return label
     }()
     
-    private let uberInfoLabel: UILabel = {
+    private let iInfoLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "UberX"
+        label.text = " "
         label.textAlignment = .center
         return label
     }()
@@ -108,7 +108,7 @@ class RideActionView: UIView {
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("CONFIRM UBERX", for: .normal)
+        button.setTitle(" CONFIRM ", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
@@ -138,14 +138,14 @@ class RideActionView: UIView {
         infoView.setDimensions(height: 60, width: 60)
         infoView.layer.cornerRadius = 60 / 2
         
-        addSubview(uberInfoLabel)
-        uberInfoLabel.anchor(top: infoView.bottomAnchor, paddingTop: 8)
-        uberInfoLabel.centerX(inView: self)
+        addSubview(iInfoLabel)
+        iInfoLabel.anchor(top: infoView.bottomAnchor, paddingTop: 8)
+        iInfoLabel.centerX(inView: self)
         
         let separatorView = UIView()
         separatorView.backgroundColor = .lightGray
         addSubview(separatorView)
-        separatorView.anchor(top: uberInfoLabel.bottomAnchor, left: leftAnchor,
+        separatorView.anchor(top: iInfoLabel.bottomAnchor, left: leftAnchor,
                              right: rightAnchor, paddingTop: 4, height: 0.75)
         
         addSubview(actionButton)
@@ -196,7 +196,7 @@ class RideActionView: UIView {
             }
             
             infoViewLabel.text = String(user.fullname.first ?? "X")
-            uberInfoLabel.text = user.fullname
+            iInfoLabel.text = user.fullname
             
         case .driverArrived:
             guard let user = user else { return }

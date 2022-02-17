@@ -77,14 +77,16 @@ extension MenuController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
-        guard let option = MenuOptions(rawValue: indexPath.row) else { return UITableViewCell() }
+        guard let option = MenuOptions(rawValue: indexPath.row) else { print("DEBUG: options -cellForRowAt- is nil!")
+            return UITableViewCell() }
         cell.textLabel?.text = option.description
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let option = MenuOptions(rawValue: indexPath.row) else { return }
+        guard let option = MenuOptions(rawValue: indexPath.row) else { print("DEBUG: options -didSelectRowAt- is nil!")
+            return }
         delegate?.didSelect(option: option)
     }
 }

@@ -46,6 +46,7 @@ class SettingsController: UITableViewController {
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
+        print("DEBUG: user init is Settings called")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -85,6 +86,7 @@ class SettingsController: UITableViewController {
         tableView.backgroundColor = .white
         tableView.tableHeaderView = infoHeader
         tableView.tableFooterView = UIView()
+        print("DEBUG: configuring TableView completed")
     }
     
     func configureNavigationBar() {
@@ -124,7 +126,8 @@ extension SettingsController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
         
-        guard let type = LocationType(rawValue: indexPath.row) else { return cell }
+        guard let type = LocationType(rawValue: indexPath.row) else { print("DEBUG: LocationType-rawValue is nil")
+            return cell }
         cell.titleLabel.text = type.description
         cell.addressLabel.text = locationText(forType: type)
         
@@ -145,6 +148,7 @@ extension SettingsController {
 
 extension SettingsController: AddLocationControllerDelegate {
     func updateLocation(locationString: String, type: LocationType) {
+        print("DEBUG: updateLocation called")
         PassengerService.shared.saveLocation(locationString: locationString, type: type) { (err, ref) in
             self.dismiss(animated: true, completion: nil)
             self.userInfoUpdated = true

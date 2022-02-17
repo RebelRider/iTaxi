@@ -17,7 +17,8 @@ struct DriverService {
     
     func observeTrips(completion: @escaping(Trip) -> Void) {
         REF_TRIPS.observe(.childAdded) { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            guard let dictionary = snapshot.value as? [String: Any] else { print("DEBUG: snapshot is nil in observeTrips")
+                return }
             let uid = snapshot.key
             let trip = Trip(passengerUid: uid, dictionary: dictionary)
             completion(trip)
@@ -31,7 +32,8 @@ struct DriverService {
     }
     
     func acceptTrip(trip: Trip, completion: @escaping(Error?, DatabaseReference) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { print("DEBUG: uid is nil in acceptTrip")
+                                                                  return }
         let values = ["driverUid": uid,
                       "state": TripState.accepted.rawValue] as [String : Any]
         REF_TRIPS.child(trip.passengerUid).updateChildValues(values, withCompletionBlock: completion)
@@ -47,7 +49,8 @@ struct DriverService {
     }
     
     func updateDriverLocation(location: CLLocation) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { print("DEBUG: Driver's uid is nil!")
+            return }
         let geofire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
         geofire.setLocation(location, forKey: uid)
     }
@@ -86,7 +89,8 @@ struct PassengerService {
     }
     
     func observeCurrentTrip(completion: @escaping(Trip) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { print("DEBUG: uid is nil in observeCurrentTrip")
+            return }
         
         REF_TRIPS.child(uid).observe(.value) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }

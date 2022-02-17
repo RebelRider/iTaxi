@@ -78,7 +78,7 @@ class HomeController: UIViewController {
     }
     
     private let actionButton: UIButton = {
-        let image = UIImage(systemName: "crop")
+        let image = UIImage(systemName: "rectangle.and.hand.point.up.left")
         let button = UIButton(type: .system)
         button.setImage(image!.withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)

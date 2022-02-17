@@ -128,7 +128,7 @@ class ContainerController: UIViewController {
     
     func animateMenu(shouldExpand: Bool, completion: ((Bool) -> Void)? = nil) {
         if shouldExpand {
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.homeController.view.frame.origin.x = self.xOrigin
                 self.blackView.alpha = 1
             }, completion: nil)
@@ -173,13 +173,14 @@ extension ContainerController: MenuControllerDelegate {
     func didSelect(option: MenuOptions) {
         isExpanded.toggle()
         animateMenu(shouldExpand: isExpanded) { _ in
-            print("animating Menu")
+            print("DEBUG: animating Menu")
             switch option {
             case .yourTrips:
                 break
             case .settings:
                 guard let user = self.user else { return }
                 let controller = SettingsController(user: user)
+                print("DEBUG: init user for SettingsController\(user.fullname)")
                 controller.delegate = self
                 let nav = UINavigationController(rootViewController: controller)
                 self.present(nav, animated: true, completion: nil)

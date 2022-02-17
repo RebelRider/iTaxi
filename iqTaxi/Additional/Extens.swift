@@ -148,7 +148,7 @@ extension MKPlacemark {
     }
 }
 
-extension MKMapView {
+extension MKMapView { //to make sure CONFIRM button does not covering annotation
     func zoomToFit(annotations: [MKAnnotation]) {
         var zoomRect = MKMapRect.null
         
@@ -160,7 +160,7 @@ extension MKMapView {
         }
         
         let insets = UIEdgeInsets(top: 100, left: 100, bottom: 300, right: 100)
-        setVisibleMapRect(zoomRect, edgePadding: insets, animated: true)
+        setVisibleMapRect(zoomRect, edgePadding: insets, animated: true) //some "padding" in map, so element will not overlay annotations of driver or passenger
     }
     
     func addAnnotationAndSelect(forCoordinate coordinate: CLLocationCoordinate2D) {
@@ -188,6 +188,7 @@ extension UIViewController {
             
             let indicator = UIActivityIndicatorView()
             //??? indicator.style = .UIActivityIndicatorView.Style.large
+            indicator.style = .large
             indicator.center = view.center
             
             let label = UILabel()

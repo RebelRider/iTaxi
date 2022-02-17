@@ -46,18 +46,30 @@ class SignUpController: UIViewController {
     }()
     
     private let emailTextField: UITextField = {
-        return UITextField().textField(withPlaceholder: "Email",
-                                       isSecureTextEntry: false)
+        let emtf = UITextField()
+        emtf.attributedPlaceholder = NSAttributedString(string:"Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.7)])
+        emtf.keyboardType = UIKeyboardType.emailAddress
+        emtf.isSecureTextEntry = false
+        emtf.textColor = .white
+        return emtf
     }()
     
     private let fullnameTextField: UITextField = {
-        return UITextField().textField(withPlaceholder: "Fullname",
-                                       isSecureTextEntry: false)
+        let fnmtf = UITextField()
+        fnmtf.attributedPlaceholder = NSAttributedString(string:"Fullname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.7)])
+        fnmtf.keyboardType = UIKeyboardType.asciiCapable
+        fnmtf.isSecureTextEntry = false
+        fnmtf.textColor = .white
+        return fnmtf
     }()
     
     private let passwordTextField: UITextField = {
-        return UITextField().textField(withPlaceholder: "Password",
-                                       isSecureTextEntry: true)
+        let passtf = UITextField()
+        passtf.attributedPlaceholder = NSAttributedString(string:"Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.7)])
+        passtf.keyboardType = UIKeyboardType.asciiCapable
+        passtf.isSecureTextEntry = true
+        passtf.textColor = .white
+        return passtf
     }()
     
     private let accountTypeSegmentedControl: UISegmentedControl = {
@@ -66,6 +78,15 @@ class SignUpController: UIViewController {
         sc.tintColor = UIColor(white: 1, alpha: 0.87)
         sc.selectedSegmentIndex = 0
         return sc
+    }()
+    
+    private let carmodelTextField: UITextField = {
+        let carm = UITextField()
+        carm.attributedPlaceholder = NSAttributedString(string:"Car model", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.7)])
+        carm.keyboardType = UIKeyboardType.asciiCapable
+        carm.isSecureTextEntry = false
+        carm.textColor = .white
+        return carm
     }()
     
     private let signUpButton: AuthButton = {
@@ -105,6 +126,7 @@ class SignUpController: UIViewController {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         guard let fullname = fullnameTextField.text else { return }
+        guard let carmodel = carmodelTextField.text else { return }
         let accountTypeIndex = accountTypeSegmentedControl.selectedSegmentIndex
                 
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
@@ -137,7 +159,7 @@ class SignUpController: UIViewController {
     }
     
     @objc func handleShowLogin() {
-        
+        print("DEBUG: handleShowLogin called")
         navigationController?.popViewController(animated: true)
     }
     
@@ -147,7 +169,8 @@ class SignUpController: UIViewController {
         REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: { (error, ref) in
             //check!!!
             //guard let controller = UIApplication.shared.keyWindow?.rootViewController as? ContainerController else { return }
-            guard let controller = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController as? ContainerController else { return }//??? is it right solution?
+            guard let controller = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController as? ContainerController else { print("DEBUG: controller is nil")
+                return }//??? is it right solution?
             print("DEBUG: calling controller.configure func")
             controller.configure()
             self.dismiss(animated: true, completion: nil)

@@ -19,6 +19,7 @@ class LoginController: UIViewController {
         let image = UIImage(systemName: "signpost.right.fill")
         let view = UIView().inputContainerView(image: image!, textField: emailTextField)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        view.tintColor = .white
         return view
     }()
     
@@ -26,6 +27,7 @@ class LoginController: UIViewController {
         let image = UIImage(systemName: "lock.open.fill")
         let view = UIView().inputContainerView(image: image!, textField: passwordTextField)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        view.tintColor = .white
         return view
     }()
     

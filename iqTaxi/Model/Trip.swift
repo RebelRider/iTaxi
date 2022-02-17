@@ -28,7 +28,8 @@ struct Trip {
         
         if let destinationCoordinates = dictionary["destinationCoordinates"] as? NSArray {
             guard let lat = destinationCoordinates[0] as? CLLocationDegrees else { return }
-            guard let long = destinationCoordinates[1] as? CLLocationDegrees else { return }
+            guard let long = destinationCoordinates[1] as? CLLocationDegrees else {print("DEBUG: coords is nil in destCoords")
+                return }
             self.destinationCoordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
         }
         
