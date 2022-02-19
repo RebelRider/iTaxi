@@ -48,6 +48,7 @@ class MenuController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        print("DEBUG: viewDidLoad MenuController")
         super.viewDidLoad()
         view.backgroundColor = .white
         configureTableView()
@@ -58,6 +59,7 @@ class MenuController: UITableViewController {
     // MARK: - Helper Functions
     
     func configureTableView() {
+        print("DEBUG: calling -configureTableView in MenuController-")
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -77,6 +79,7 @@ extension MenuController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
+        print("DEBUG: calling -cellForRowAt-")
         guard let option = MenuOptions(rawValue: indexPath.row) else { print("DEBUG: options -cellForRowAt- is nil!")
             return UITableViewCell() }
         cell.textLabel?.text = option.description
@@ -85,6 +88,7 @@ extension MenuController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("DEBUG: calling -didSelectRowAt-")
         guard let option = MenuOptions(rawValue: indexPath.row) else { print("DEBUG: options -didSelectRowAt- is nil!")
             return }
         delegate?.didSelect(option: option)

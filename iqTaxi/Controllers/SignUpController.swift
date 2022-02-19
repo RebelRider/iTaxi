@@ -8,6 +8,8 @@ class SignUpController: UIViewController {
     
     private var location = LocationHandler.shared.locationManager.location
     
+    
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "UBER"
@@ -45,6 +47,17 @@ class SignUpController: UIViewController {
         return view
     }()
     
+    private lazy var carModelContainerView: UIView = {
+        let image = UIImage(systemName: "car")
+        let view = UIView().inputContainerView(image: image!, textField: carmodelTextField)
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return view
+    }()
+    
+    
+    
+    
+    
     private let emailTextField: UITextField = {
         let emtf = UITextField()
         emtf.attributedPlaceholder = NSAttributedString(string:"Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.7)])
@@ -73,11 +86,12 @@ class SignUpController: UIViewController {
     }()
     
     private let accountTypeSegmentedControl: UISegmentedControl = {
-        let sc = UISegmentedControl(items: ["Rider", "Driver"])
-        sc.backgroundColor = .backgroundColor
-        sc.tintColor = UIColor(white: 1, alpha: 0.87)
-        sc.selectedSegmentIndex = 0
-        return sc
+        let scz = UISegmentedControl(items: ["Rider", "Driver"])
+        scz.backgroundColor = .backgroundColor
+        scz.tintColor = UIColor(white: 1, alpha: 0.87)
+        scz.selectedSegmentIndex = 0
+        scz.addTarget(self, action: #selector(showHideCarModel(_:)), for: UIControl.Event.valueChanged)
+        return scz
     }()
     
     private let carmodelTextField: UITextField = {
@@ -87,6 +101,15 @@ class SignUpController: UIViewController {
         carm.isSecureTextEntry = false
         carm.textColor = .white
         return carm
+    }()
+    
+    private let statusLabel: UILabel = {
+        let slabel = UILabel()
+        slabel.text = " "
+        slabel.font = UIFont(name: "Avenir-Light", size: 15)
+        slabel.textColor = UIColor(white: 1, alpha: 0.8)
+        slabel.setDimensions(height: 44, width: 111)
+        return slabel
     }()
     
     private let signUpButton: AuthButton = {
@@ -121,7 +144,17 @@ class SignUpController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc func showHideCarModel(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex != 1 {
+            carModelContainerView.isHidden = true
+        }
+        else {
+            carModelContainerView.isHidden = false
+        }
+    }
+    
     @objc func handleSignUp() {
+        statusLabel.text = ""
         print("DEBUG: handleSignUp called")
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
@@ -132,6 +165,7 @@ class SignUpController: UIViewController {
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 print("DEBUG: Failed to register user with error \(error.localizedDescription)")
+                self.statusLabel.text = error.localizedDescription
                 return
             }
             
@@ -178,6 +212,8 @@ class SignUpController: UIViewController {
     }
     
     func configureUI() {
+        showHideCarModel(accountTypeSegmentedControl)
+        
         view.backgroundColor = .backgroundColor
         
         view.addSubview(titleLabel)
@@ -188,6 +224,7 @@ class SignUpController: UIViewController {
                                                    fullnameContainerView,
                                                    passwordContainerView,
                                                    accountTypeContainerView,
+                                                   carModelContainerView,
                                                    signUpButton])
         stack.axis = .vertical
         stack.distribution = .fillProportionally

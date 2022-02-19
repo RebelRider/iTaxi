@@ -159,13 +159,14 @@ extension MKMapView { //to make sure CONFIRM button does not covering annotation
             zoomRect = zoomRect.union(pointRect)
         }
         
-        let insets = UIEdgeInsets(top: 100, left: 100, bottom: 300, right: 100)
+        let insets = UIEdgeInsets(top: 111, left: 111, bottom: 333, right: 111)
         setVisibleMapRect(zoomRect, edgePadding: insets, animated: true) //some "padding" in map, so element will not overlay annotations of driver or passenger
     }
     
     func addAnnotationAndSelect(forCoordinate coordinate: CLLocationCoordinate2D) {
-        let annotation = MKPointAnnotation()
+        let annotation = PickupAnnotation(coordinate: coordinate)
         annotation.coordinate = coordinate
+        annotation.image = UIImage(systemName: "figure.wave")
         addAnnotation(annotation)
         selectAnnotation(annotation, animated: true)
     }

@@ -13,7 +13,7 @@ let REF_TRIPS = DB_REF.child("trips")
 // MARK: - DriverService
 
 struct DriverService {
-    static let shared = DriverService()
+    static let shared = DriverService() // one instance, SINGLETON
     
     func observeTrips(completion: @escaping(Trip) -> Void) {
         REF_TRIPS.observe(.childAdded) { (snapshot) in
@@ -36,6 +36,7 @@ struct DriverService {
                                                                   return }
         let values = ["driverUid": uid,
                       "state": TripState.accepted.rawValue] as [String : Any]
+        print("values in acceptTrip - \(values)")
         REF_TRIPS.child(trip.passengerUid).updateChildValues(values, withCompletionBlock: completion)
     }
     
@@ -59,7 +60,7 @@ struct DriverService {
 // MARK: - PassengerService
 
 struct PassengerService {
-    static let shared = PassengerService()
+    static let shared = PassengerService() // one instance, SINGLETON
     
     func fetchDrivers(location: CLLocation, completion: @escaping(User) -> Void) {
         let geofire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)

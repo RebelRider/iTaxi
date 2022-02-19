@@ -192,7 +192,7 @@ class RideActionView: UIView {
             } else {
                 buttonAction = .cancel
                 actionButton.setTitle(buttonAction.description, for: .normal)
-                titleLabel.text = "Driver En Route"
+                titleLabel.text = "Driver on Route"
             }
             
             infoViewLabel.text = String(user.fullname.first ?? "X")

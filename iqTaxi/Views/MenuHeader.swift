@@ -9,7 +9,7 @@ class MenuHeader: UIView {
     
     private lazy var profileImageView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        //view.backgroundColor = .black
 
         view.addSubview(initialLabel)
         initialLabel.centerX(inView: view)

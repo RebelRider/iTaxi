@@ -39,7 +39,7 @@ class ContainerController: UIViewController {
     @objc func dismissMenu() {
         isExpanded = false
         animateMenu(shouldExpand: isExpanded)
-        print("dismissing menu")
+        print("DEBUG: dismissing menu")
     }
     
     // MARK: - API

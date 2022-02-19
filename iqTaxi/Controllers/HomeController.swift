@@ -656,6 +656,7 @@ extension HomeController: RideActionViewDelegate {
     }
     
     func dropOffPassenger() {
+        
         guard let trip = self.trip else { return }
         DriverService.shared.updateTripState(trip: trip, state: .completed) { (err, ref) in
             self.removeAnnotationsAndOverlays()
@@ -683,10 +684,12 @@ extension HomeController: PickupControllerDelegate {
         
         observeCancelledTrip(trip: trip)
         
+        print("Trip state: \(String(describing: trip.state))")
         self.dismiss(animated: true) {
             Service.shared.fetchUserData(uid: trip.passengerUid, completion: { passenger in
                 self.animateRideActionView(shouldShow: true, config: .tripAccepted,
                                            user: passenger)
+                print("Trip state: \(String(describing: trip.state))")
             })
         }
     }

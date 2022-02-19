@@ -88,7 +88,8 @@ class PickupController: UIViewController {
         circularProgressView.setProgressWithAnimation(duration: 10, value: 0) {
 //            DriverService.shared.updateTripState(trip: self.trip, state: .denied) { (err, ref) in
 //                self.dismiss(animated: true, completion: nil)
-//            }
+//            } // cancel trip on timeout?
+            self.pickupLabel.text = "Pickup this passsenger?"
         }
     }
     
@@ -101,9 +102,8 @@ class PickupController: UIViewController {
     // MARK: - Helper Functions
     
     func configureMapView() {
-        let region = MKCoordinateRegion(center: trip.pickupCoordinates, latitudinalMeters: 1000, longitudinalMeters: 1000)
-        mapView.setRegion(region, animated: false)
-        
+        let region = MKCoordinateRegion(center: trip.pickupCoordinates, latitudinalMeters: 888, longitudinalMeters: 888)
+        mapView.setRegion(region, animated: true)
         mapView.addAnnotationAndSelect(forCoordinate: trip.pickupCoordinates)
     }
     
