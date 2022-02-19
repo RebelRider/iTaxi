@@ -166,9 +166,9 @@
 		5CF0625027B981EA0087D962 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5CF0625127B982360087D962 /* ContainerController.swift */,
 				5CF0625527B983000087D962 /* SignUpController.swift */,
 				5CF0624227B97B110087D962 /* LoginController.swift */,
+				5CF0625127B982360087D962 /* ContainerController.swift */,
 				5CF0625327B982AD0087D962 /* MenuController.swift */,
 				5CF0625E27B9846A0087D962 /* HomeController.swift */,
 				5CF0627027B988510087D962 /* PickupController.swift */,

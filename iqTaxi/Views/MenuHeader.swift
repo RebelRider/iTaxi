@@ -69,13 +69,13 @@ class MenuHeader: UIView {
         
         addSubview(profileImageView)
         profileImageView.anchor(top: topAnchor, left: leftAnchor,
-                                paddingTop: 4, paddingLeft: 12,
+                                paddingTop: 32, paddingLeft: 12,
                                 width: 64, height: 64)
         profileImageView.layer.cornerRadius = 64 / 2
         
         let stack = UIStackView(arrangedSubviews: [fullnameLabel, emailLabel])
         stack.distribution = .fillEqually
-        stack.spacing = 4
+        stack.spacing = 6
         stack.axis = .vertical
         
         addSubview(stack)
@@ -101,10 +101,16 @@ class MenuHeader: UIView {
     func configureSwitch(enabled: Bool) {
         if user.accountType == .driver {
             addSubview(pickupModeLabel)
-            pickupModeLabel.anchor(top: profileImageView.bottomAnchor, left: leftAnchor, paddingTop: 12, paddingLeft: 16)
+            pickupModeLabel.anchor(top: profileImageView.bottomAnchor,
+                                   left: leftAnchor,
+                                   paddingTop: 28,
+                                   paddingLeft: 16)
             
             addSubview(pickupModeSwitch)
-            pickupModeSwitch.anchor(top: pickupModeLabel.bottomAnchor, left: leftAnchor, paddingTop: 4, paddingLeft: 16)
+            pickupModeSwitch.anchor(top: pickupModeLabel.bottomAnchor,
+                                    left: leftAnchor,
+                                    paddingTop: -33,
+                                    paddingLeft: 177)
             
             pickupModeSwitch.isOn = enabled
             pickupModeLabel.text = enabled ? "PICKUP MODE ENABLED" : "PICKUP MODE DISABLED"

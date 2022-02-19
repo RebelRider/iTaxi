@@ -166,6 +166,7 @@ class RideActionView: UIView {
             delegate?.uploadTrip(self)
         case .cancel:
             delegate?.cancelTrip()
+            print("DEBUG: Handle cancelTrip..")
         case .getDirections:
             print("DEBUG: Handle get directions..")
         case .pickup:

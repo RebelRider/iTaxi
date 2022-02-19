@@ -9,7 +9,6 @@ class ContainerController: UIViewController {
     private var menuController: MenuController!
     private var isExpanded = false
     private let blackView = UIView()
-    private lazy var xOrigin = self.view.frame.width - 80
     
     private var user: User? {
         didSet {
@@ -95,26 +94,27 @@ class ContainerController: UIViewController {
     }
     
     func configureHomeController() {
-        print("configureHomeController called")
+        print("OK: configureHomeController called")
         addChild(homeController)
         homeController.didMove(toParent: self)
         view.addSubview(homeController.view)
         homeController.delegate = self
-        print("configureHomeController done")
+        print("OK: configureHomeController ...DONE")
     }
     
     func configureMenuController(withUser user: User) {
-        print("configureMenuController called")
+        print("OK: configureMenuController called")
         menuController = MenuController(user: user)
         addChild(menuController)
         menuController.didMove(toParent: self)
         view.insertSubview(menuController.view, at: 0)
         menuController.delegate = self
         configureBlackView()
+        print("OK: configureMenuController ...DONE")
     }
     
     func configureBlackView() {
-        self.blackView.frame = CGRect(x: xOrigin,
+        self.blackView.frame = CGRect(x: self.view.frame.width - 80,
                                       y: 0,
                                       width: 80,
                                       height: self.view.frame.height)
@@ -128,8 +128,8 @@ class ContainerController: UIViewController {
     
     func animateMenu(shouldExpand: Bool, completion: ((Bool) -> Void)? = nil) {
         if shouldExpand {
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                self.homeController.view.frame.origin.x = self.xOrigin
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+                self.homeController.view.frame.origin.x = self.view.frame.width - 80
                 self.blackView.alpha = 1
             }, completion: nil)
         } else {
@@ -176,6 +176,7 @@ extension ContainerController: MenuControllerDelegate {
             print("DEBUG: animating Menu")
             switch option {
             case .yourTrips:
+                print("DEBUG: loading user's trips")
                 break
             case .settings:
                 guard let user = self.user else { return }

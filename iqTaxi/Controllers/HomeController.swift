@@ -116,7 +116,7 @@ class HomeController: UIViewController {
     // MARK: - Passenger API
     
     func observeCurrentTrip() {
-        print("observeCurrentTrip called")
+        print("DEBUG: observeCurrentTrip called")
         PassengerService.shared.observeCurrentTrip { trip in
             self.trip = trip
             guard let state = trip.state else { return }

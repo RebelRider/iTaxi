@@ -20,16 +20,25 @@ protocol MenuControllerDelegate: AnyObject {//???
     func didSelect(option: MenuOptions)
 }
 
-class MenuController: UITableViewController {
+class MenuController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Properties
     
     private let user: User
     weak var delegate: MenuControllerDelegate?
     
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.tableFooterView = UIView()
+        return tableView
+    }()
+    
     private lazy var menuHeader: MenuHeader = {
         let frame = CGRect(x: 0,
-                           y: 0,
+                           y: 54,
                            width: self.view.frame.width - 80,
                            height: 140)
         let view = MenuHeader(user: user, frame: frame)
@@ -41,6 +50,7 @@ class MenuController: UITableViewController {
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
+        print("Authorized as  \(user) \n .... init MenuController DONE")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,9 +58,12 @@ class MenuController: UITableViewController {
     }
     
     override func viewDidLoad() {
-        print("DEBUG: viewDidLoad MenuController")
+        print("OK: viewDidLoad MenuController")
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.tintColor = .green
+        view.backgroundColor = .red
+        setupUI()
+        setupTableView()
         configureTableView()
     }
     
@@ -58,12 +71,22 @@ class MenuController: UITableViewController {
     
     // MARK: - Helper Functions
     
+    private func setupUI(){
+        view.backgroundColor = .white
+        print("DEBUG: setupUI MenuController ...DONE")
+    }
+    
+    private func setupTableView(){
+        view.addSubview(tableView)
+        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)//, paddingTop: 44)
+    }
+    
     func configureTableView() {
         print("DEBUG: calling -configureTableView in MenuController-")
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
-        tableView.rowHeight = 60
+        tableView.rowHeight = 59
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.tableHeaderView = menuHeader
     }
@@ -72,11 +95,12 @@ class MenuController: UITableViewController {
 // MARK: - UITableViewDelegate/DataSource
 
 extension MenuController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MenuOptions.allCases.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
         print("DEBUG: calling -cellForRowAt-")
@@ -87,7 +111,7 @@ extension MenuController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("DEBUG: calling -didSelectRowAt-")
         guard let option = MenuOptions(rawValue: indexPath.row) else { print("DEBUG: options -didSelectRowAt- is nil!")
             return }
