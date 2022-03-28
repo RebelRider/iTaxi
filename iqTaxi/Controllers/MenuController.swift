@@ -60,8 +60,6 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         print("OK: viewDidLoad MenuController")
         super.viewDidLoad()
-        view.tintColor = .green
-        view.backgroundColor = .red
         setupUI()
         setupTableView()
         configureTableView()

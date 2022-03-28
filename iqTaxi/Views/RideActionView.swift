@@ -4,7 +4,7 @@ import MapKit
 
 protocol RideActionViewDelegate: AnyObject { //???
     func uploadTrip(_ view: RideActionView)
-    func cancelTrip()
+    func cancelTrip(_ view: RideActionView)
     func pickupPassenger()
     func dropOffPassenger()
 }
@@ -165,7 +165,7 @@ class RideActionView: UIView {
         case .requestRide:
             delegate?.uploadTrip(self)
         case .cancel:
-            delegate?.cancelTrip()
+            delegate?.cancelTrip(self)
             print("DEBUG: Handle cancelTrip..")
         case .getDirections:
             print("DEBUG: Handle get directions..")
@@ -186,7 +186,7 @@ class RideActionView: UIView {
         case .tripAccepted:
             guard let user = user else { return }
             
-            if user.accountType == .passenger {
+            if user.accountType == .passenger { //bcs user now is for image & text, so it's opposite
                 titleLabel.text = "En Route To Passenger"
                 buttonAction = .getDirections
                 actionButton.setTitle(buttonAction.description, for: .normal)

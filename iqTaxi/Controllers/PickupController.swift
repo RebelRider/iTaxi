@@ -7,7 +7,6 @@ protocol PickupControllerDelegate: AnyObject {//???
 }
 
 class PickupController: UIViewController {
-    
     // MARK: - Properties
     
     weak var delegate: PickupControllerDelegate?
@@ -102,7 +101,8 @@ class PickupController: UIViewController {
     // MARK: - Helper Functions
     
     func configureMapView() {
-        let region = MKCoordinateRegion(center: trip.pickupCoordinates, latitudinalMeters: 888, longitudinalMeters: 888)
+        guard let pickUpRegion = trip.pickupCoordinates else { return } //added because of crash after rider ends
+        let region = MKCoordinateRegion(center: pickUpRegion, latitudinalMeters: 888, longitudinalMeters: 888)//crash if user is driver & trip ends
         mapView.setRegion(region, animated: true)
         mapView.addAnnotationAndSelect(forCoordinate: trip.pickupCoordinates)
     }

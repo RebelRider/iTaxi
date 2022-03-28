@@ -177,7 +177,13 @@ class SignUpController: UIViewController {
                           "accountType": accountTypeIndex] as [String : Any]
             
             if accountTypeIndex == 1 {
+                let values = ["email": email,
+                              "fullname": fullname,
+                              "accountType": accountTypeIndex,
+                              "carmodel": carmodel] as [String : Any]
+                
                 print("DEBUG: creating user as driver")
+                print(values)
                 let geofire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
                 guard let location = self.location else {
                     print("DEBUG: driver location is nil! ERROR")

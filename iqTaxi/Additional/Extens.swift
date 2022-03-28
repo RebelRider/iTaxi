@@ -191,6 +191,7 @@ extension UIViewController {
             //??? indicator.style = .UIActivityIndicatorView.Style.large
             indicator.style = .large
             indicator.center = view.center
+            indicator.alpha = 0.9
             
             let label = UILabel()
             label.text = message
@@ -199,12 +200,25 @@ extension UIViewController {
             label.textAlignment = .center
             label.alpha = 0.87
             
+            let cancelTripButton = UIButton()
+            cancelTripButton.backgroundColor = .black
+            cancelTripButton.setTitle(" CANCEL ", for: .normal)
+            cancelTripButton.setTitleColor(.white, for: .normal)
+            cancelTripButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+            cancelTripButton.center = view.center
+            cancelTripButton.addTarget(self, action: #selector(cancelTripButtonPressed), for: .touchUpInside)
+               
+            
             view.addSubview(loadingView)
             loadingView.addSubview(indicator)
             loadingView.addSubview(label)
+            loadingView.addSubview(cancelTripButton)
             
             label.centerX(inView: view)
             label.anchor(top: indicator.bottomAnchor, paddingTop: 32)
+            cancelTripButton.anchor(top: label.bottomAnchor, paddingTop: 55)
+            cancelTripButton.centerX(inView: view)
+            cancelTripButton.backgroundColor = UIColor.black
             
             indicator.startAnimating()
             
@@ -222,5 +236,15 @@ extension UIViewController {
                 }
             }
         }
+    }
+    
+    @objc func cancelTripButtonPressed() {
+        print("DEBUG: cancelTripButtonPressed")
+        
+        PassengerService.shared.deleteTrip(completion: { (error, ref) in
+            self.presentAlertController(withTitle: "Trip cancelled",
+                                        message: "Maybe another time?")
+        })
+        self.shouldPresentLoadingView(false, message: "Cancel trip")
     }
 }

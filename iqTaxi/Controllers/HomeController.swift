@@ -399,6 +399,7 @@ private extension HomeController {
             guard let response = response else { return }
             self.route = response.routes[0]
             guard let polyline = self.route?.polyline else { return }
+            polyline.accessibilityNavigationStyle = .combined
             self.mapView.addOverlay(polyline)
         }
     }
@@ -518,6 +519,8 @@ extension HomeController: CLLocationManagerDelegate {
             print("DEBUG: Not determined..")
             locationManager?.requestWhenInUseAuthorization()
         case .restricted, .denied:
+            removeAnnotationsAndOverlays()
+            centerMapOnUserLocation()
             break
         case .authorizedAlways:
             print("DEBUG: Auth always..")
@@ -526,6 +529,8 @@ extension HomeController: CLLocationManagerDelegate {
             locationManager?.startUpdatingLocation()
             locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         @unknown default:
+            removeAnnotationsAndOverlays()
+            centerMapOnUserLocation()
             break
         }
     }
@@ -614,6 +619,13 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - RideActionViewDelegate
 
 extension HomeController: RideActionViewDelegate {
+    
+    func cancelTrip(_ view: RideActionView) {
+        self.centerMapOnUserLocation()
+        self.animateRideActionView(shouldShow: false)
+        self.removeAnnotationsAndOverlays()
+    }
+    
     func uploadTrip(_ view: RideActionView) {
         guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
         guard let destinationCoordinates = view.destination?.coordinate else { return }
@@ -684,7 +696,7 @@ extension HomeController: PickupControllerDelegate {
         
         observeCancelledTrip(trip: trip)
         
-        print("Trip state: \(String(describing: trip.state))")
+        print("PickupControllerDelegate - Trip state: \(String(describing: trip.state))")
         self.dismiss(animated: true) {
             Service.shared.fetchUserData(uid: trip.passengerUid, completion: { passenger in
                 self.animateRideActionView(shouldShow: true, config: .tripAccepted,
